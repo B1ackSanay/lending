@@ -191,7 +191,7 @@ export default {
       }
 
       try {
-        const response = await fetch('/api/request', {
+        const response = await fetch(import.meta.env.VITE_API_URL + '/api/request', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
