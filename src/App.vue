@@ -2,117 +2,56 @@
   <div>
     <header>
       <div class="header-container">
-        <div class="logo">
-          <img :src="logo" alt="СофтАрт" />
-        </div>
+        <a href="/" class="logo-link">
+          <div class="logo">
+            <img :src="logo" alt="СофтАрт" />
+          </div>
+        </a>
         <nav>
-          <a href="#">Услуги</a>
-          <a href="#">Проекты</a>
-          <a href="#">Продукты</a>
-          <a href="#">Технологии</a>
-          <a href="#">Контакты</a>
+          <a href="?service=landing">Лендинги</a>
+          <a href="?service=corporate">Корпоративные</a>
+          <a href="?service=shop">Магазины</a>
+          <a href="?service=seo">Поддержка</a>
+          <a href="#projects">Проекты</a>
         </nav>
       </div>
     </header>
 
-    <section class="hero">
-      <h1>
-        Разработка, размещение, поддержка и<br />
-        продвижение интернет-проектов
-      </h1>
-      <p>
-        SoftArt - полный цикл: лендинги, интернет-магазины,
-        корпоративные порталы на TALL stack.
-        Каждая заявка сразу в вашу CRM.
-      </p>
+    <section class="hero" id="hero">
+      <h1>Разработка, размещение, поддержка и<br />продвижение интернет-проектов</h1>
+      <p>SoftArt - полный цикл: лендинги, интернет-магазины, корпоративные порталы на TALL stack. Каждая заявка сразу в вашу CRM.</p>
       <div class="hero-buttons">
-        <button class="btn-primary" @click="openModal">
-          Подать заявку
-        </button>
-        <button class="btn-secondary">
-          Наши сервисы
-        </button>
+        <button class="btn-primary" @click="openModal('general')">Подать заявку</button>
+        <button class="btn-secondary" @click="scrollToServices">Наши сервисы</button>
       </div>
     </section>
 
-    <section class="services">
-      <h2>Что мы делаем</h2>
-      <div class="cards">
-        <div class="card">
-          <div class="card-icon">
-            <img :src="landingIcon" alt="" />
-          </div>
-          <h3>Лендинги</h3>
-          <p>
-            Высокая конверсия, скорость
-            загрузки, анимация.
-            Идеальны для рекламы.
-          </p>
-        </div>
+    <!-- Контент услуги из URL -->
+    <ServicesTabs ref="servicesRef" :openModal="openModal" :serviceType="currentService" />
 
-        <div class="card">
-          <div class="card-icon">
-            <img :src="corporateIcon" alt="" />
-          </div>
-          <h3>
-            Корпоративные<br />
-            сайты
-          </h3>
-          <p>
-            CRM, SiteSet CMS, 1С
-            интеграция, личные кабинеты.
-          </p>
-        </div>
-
-        <div class="card">
-          <div class="card-icon">
-            <img :src="shopIcon" alt="" />
-          </div>
-          <h3>
-            Интернет-<br />
-            магазины
-          </h3>
-          <p>
-            Каталоги, фильтры, оплата,
-            доставка и API.
-          </p>
-        </div>
-
-        <div class="card">
-          <div class="card-icon">
-            <img :src="seoIcon" alt="" />
-          </div>
-          <h3>Поддержка & SEO</h3>
-          <p>
-            Продвижение в ТОП,
-            хостинг из реестра РФ,
-            SLA.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="projects">
+    <section class="projects" id="projects">
       <h2>Реализованные проекты</h2>
       <div class="projects-grid">
-        <a href="#" class="project-tag">magicfire.ru</a>
-        <a href="#" class="project-tag">япошик.рф</a>
-        <a href="#" class="project-tag">rostplast-nn.ru</a>
-        <a href="#" class="project-tag">rskit.ru</a>
-        <a href="#" class="project-tag">onlinepizza.ru</a>
-        <a href="#" class="project-tag">jadever.ru</a>
-
-        <a href="#" class="project-tag">protex-carter.ru</a>
-        <a href="#" class="project-tag">termal.biz</a>
-        <a href="#" class="project-tag">avtocenter-nn.ru</a>
-        <a href="#" class="project-tag">spa-loren.ru</a>
-        <a href="#" class="project-tag">pdc.nnov.ru</a>
-        <a href="#" class="project-tag">двери-дома.рф</a>
+        <a href="https://sushi-karate.ru" target="_blank" class="project-tag">sushi-karate.ru</a>
+        <a href="https://sportliga.com" target="_blank" class="project-tag">sportliga.com</a>
+        <a href="https://archiland.biz" target="_blank" class="project-tag">archiland.biz</a>
+        <a href="https://prof-poligraf.ru" target="_blank" class="project-tag">prof-poligraf.ru</a>
+        <a href="https://volgara.ru" target="_blank" class="project-tag">volgara.ru</a>
+        <a href="https://solyanka-shop.ru" target="_blank" class="project-tag">solyanka-shop.ru</a>
+        <a href="https://elconnect.ru" target="_blank" class="project-tag">elconnect.ru</a>
+        <a href="https://optoves.ru" target="_blank" class="project-tag">optoves.ru</a>
+        <a href="https://pirog52.ru" target="_blank" class="project-tag">pirog52.ru</a>
+        <a href="https://uvelpak.ru" target="_blank" class="project-tag">uvelpak.ru</a>
+        <a href="https://implant-dentavi.ru" target="_blank" class="project-tag">implant-dentavi.ru</a>
+        <a href="https://volgalin.ru" target="_blank" class="project-tag">volgalin.ru</a>
       </div>
     </section>
 
-    <!-- Модальное окно -->
-    <RequestModal :isOpen="isModalOpen" @close="closeModal" />
+    <RequestModal 
+      :isOpen="isModalOpen" 
+      :serviceType="selectedService"
+      @close="closeModal" 
+    />
 
     <footer>
       <div class="footer-container">
@@ -125,33 +64,44 @@
 
 <script>
 import RequestModal from './components/RequestModal.vue'
+import ServicesTabs from './components/ServicesTabs.vue'
 import logo from './components/assets/logo.svg'
-import landingIcon from './components/assets/icons/landing.svg'
-import corporateIcon from './components/assets/icons/corporate.svg'
-import shopIcon from './components/assets/icons/shop.svg'
-import seoIcon from './components/assets/icons/seo.svg'
 
 export default {
   name: 'App',
   components: {
-    RequestModal
+    RequestModal,
+    ServicesTabs
   },
   data() {
     return {
       isModalOpen: false,
-      logo,
-      landingIcon,
-      corporateIcon,
-      shopIcon,
-      seoIcon
+      selectedService: '',
+      logo
+    }
+  },
+  computed: {
+    currentService() {
+      const params = new URLSearchParams(window.location.search)
+      const service = params.get('service')
+      const valid = ['landing', 'corporate', 'shop', 'seo']
+      return service && valid.includes(service) ? service : 'landing'
     }
   },
   methods: {
-    openModal() {
+    openModal(serviceType = 'general') {
+      this.selectedService = serviceType
       this.isModalOpen = true
     },
     closeModal() {
       this.isModalOpen = false
+      this.selectedService = ''
+    },
+    scrollToServices() {
+      const el = document.getElementById('services')
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
     }
   }
 }
@@ -183,11 +133,16 @@ header {
     height: 100%;
     margin: 0 auto;
     padding: 0 20px;
-
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 20px;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
 }
 
 .logo img {
@@ -241,12 +196,16 @@ nav a:hover {
     margin-top: 45px;
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 20px;
     flex-wrap: wrap;
 }
 
 .btn-primary,
 .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     min-width: 200px;
     padding: 0 30px;
     height: 54px;
@@ -256,80 +215,31 @@ nav a:hover {
     cursor: pointer;
     transition: .2s;
     border: none;
+    text-decoration: none;
+    text-align: center;
+    line-height: 1;
 }
 
 .btn-primary {
     background: #0b87cf;
     color: #ffffff;
-    box-shadow: 0 8px 20px rgba(11, 135, 207, .25);
 }
 
 .btn-primary:hover {
-    transform: translateY(-2px);
+    background: #1e4f78;
+    box-shadow: 0 8px 28px rgba(11, 135, 207, 0.3);
 }
 
 .btn-secondary {
     background: transparent;
-    border: 1px solid #8f8f8f;
+    border: 1.5px solid #4a4a4a;
     color: #4a4a4a;
 }
 
 .btn-secondary:hover {
     background: rgba(255, 255, 255, .5);
-}
-
-/* ===== УСЛУГИ ===== */
-.services {
-    padding: 60px 20px 80px;
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
-.services h2 {
-    text-align: center;
-    font-size: clamp(28px, 3vw, 36px);
-    font-weight: 700;
-    color: #1e4f78;
-    margin-bottom: 60px;
-}
-
-.cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-}
-
-.card {
-    background: #ffffff;
-    border-radius: 18px;
-    padding: 28px 24px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, .04), 0 12px 30px rgba(0, 0, 0, .08);
-}
-
-.card-icon {
-    width: 42px;
-    height: 42px;
-    margin-bottom: 18px;
-}
-
-.card-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-.card h3 {
-    font-size: clamp(22px, 2vw, 28px);
-    font-weight: 700;
-    line-height: 1.2;
-    color: #1d2338;
-    margin-bottom: 10px;
-}
-
-.card p {
-    font-size: 14px;
-    line-height: 1.5;
-    color: #777777;
+    border-color: #0b87cf;
+    color: #0b87cf;
 }
 
 /* ===== ПРОЕКТЫ ===== */
@@ -349,7 +259,7 @@ nav a:hover {
 
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(6, 1fr);
     gap: 20px 30px;
 }
 
@@ -406,10 +316,6 @@ footer {
     nav {
         gap: 20px;
     }
-    
-    .cards {
-        grid-template-columns: repeat(2, 1fr);
-    }
 }
 
 @media (max-width: 768px) {
@@ -456,20 +362,6 @@ footer {
         min-width: 160px;
         height: 48px;
         font-size: 14px;
-    }
-
-    .cards {
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-    }
-    
-    .card {
-        padding: 20px 18px;
-    }
-    
-    .card-icon {
-        width: 36px;
-        height: 36px;
     }
 
     .projects-grid {
@@ -533,38 +425,6 @@ footer {
         max-width: 280px;
         height: 44px;
         font-size: 13px;
-    }
-
-    .services {
-        padding: 40px 12px 60px;
-    }
-    
-    .services h2 {
-        font-size: 24px;
-        margin-bottom: 40px;
-    }
-    
-    .cards {
-        grid-template-columns: 1fr;
-        gap: 16px;
-    }
-
-    .card {
-        padding: 16px 16px;
-    }
-    
-    .card h3 {
-        font-size: 20px;
-    }
-    
-    .card p {
-        font-size: 13px;
-    }
-    
-    .card-icon {
-        width: 32px;
-        height: 32px;
-        margin-bottom: 12px;
     }
 
     .projects {
