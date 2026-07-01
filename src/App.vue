@@ -26,7 +26,6 @@
       </div>
     </section>
 
-    <!-- Контент услуги из URL -->
     <ServicesTabs ref="servicesRef" :openModal="openModal" :serviceType="currentService" />
 
     <section class="projects" id="projects">

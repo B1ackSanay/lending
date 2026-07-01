@@ -5,7 +5,6 @@
       
       <h2>Оставить заявку</h2>
       
-      <!-- Отображение выбранной услуги -->
       <div v-if="selectedService" class="service-badge">
         <span>Вы выбрали:</span> 
         <strong>{{ getServiceLabel(selectedService) }}</strong>
@@ -30,13 +29,17 @@
           <span v-if="errors.email" class="error">{{ errors.email }}</span>
         </div>
         
+        <!-- ===== КОМПОНЕНТ DADATA ===== -->
         <div class="form-group">
-          <label>Компания *</label>
-          <input type="text" v-model="form.company" placeholder="ООО Ромашка" required>
-          <span v-if="errors.company" class="error">{{ errors.company }}</span>
+          <DaDataCompanyInput 
+            v-model="form.company" 
+            :api-key="dadataToken"
+            :error="errors.company"
+            @company-selected="onCompanySelected"
+          />
         </div>
+        <!-- ===== КОНЕЦ DADATA ===== -->
         
-        <!-- Поле "Дата создания" -->
         <div class="form-group">
           <label>Дата создания</label>
           <input type="date" v-model="form.date" :min="today">
@@ -47,7 +50,6 @@
           <textarea v-model="form.message" placeholder="Опишите ваш проект..." rows="3"></textarea>
         </div>
         
-        <!-- Скрытое поле с типом услуги -->
         <input type="hidden" v-model="form.service_type">
         
         <button type="submit" :disabled="isSubmitting">
@@ -63,23 +65,23 @@
 </template>
 
 <script>
+import DaDataCompanyInput from './DaDataCompanyInput.vue'
+
 export default {
   name: 'RequestModal',
+  components: {
+    DaDataCompanyInput
+  },
   props: {
-    isOpen: {
-      type: Boolean,
-      default: false
-    },
-    serviceType: {
-      type: String,
-      default: ''
-    }
+    isOpen: { type: Boolean, default: false },
+    serviceType: { type: String, default: '' }
   },
   data() {
     return {
       isSubmitting: false,
       statusMessage: '',
       statusType: '',
+      dadataToken: import.meta.env.VITE_DADATA_TOKEN || 'ваш_токен_здесь',
       form: {
         name: '',
         phone: '',
@@ -89,12 +91,7 @@ export default {
         message: '',
         service_type: ''
       },
-      errors: {
-        name: '',
-        phone: '',
-        email: '',
-        company: ''
-      },
+      errors: { name: '', phone: '', email: '', company: '' },
       serviceLabels: {
         landing: 'Лендинг',
         corporate: 'Корпоративный сайт',
@@ -111,25 +108,21 @@ export default {
       return this.serviceType || this.form.service_type
     },
     today() {
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = String(now.getMonth() + 1).padStart(2, '0');
-      const day = String(now.getDate()).padStart(2, '0');
-      return `${year}-${month}-${day}`;
+      const now = new Date()
+      const year = now.getFullYear()
+      const month = String(now.getMonth() + 1).padStart(2, '0')
+      const day = String(now.getDate()).padStart(2, '0')
+      return `${year}-${month}-${day}`
     }
   },
   watch: {
     serviceType(val) {
-      if (val) {
-        this.form.service_type = val
-      }
+      if (val) this.form.service_type = val
     },
     isOpen(val) {
       if (val) {
-        this.form.date = this.today // подставляем сегодняшнюю дату при открытии
-        if (this.serviceType) {
-          this.form.service_type = this.serviceType
-        }
+        this.form.date = this.today
+        if (this.serviceType) this.form.service_type = this.serviceType
       }
     }
   },
@@ -139,6 +132,9 @@ export default {
     },
     closeModal() {
       this.$emit('close')
+    },
+    onCompanySelected(data) {
+      console.log('Выбрана компания:', data)
     },
     validateForm() {
       let isValid = true
@@ -183,9 +179,7 @@ export default {
     async submitForm() {
       if (!this.validateForm()) {
         const firstError = document.querySelector('.error:not(:empty)')
-        if (firstError) {
-          firstError.scrollIntoView({ behavior: 'smooth', block: 'center' })
-        }
+        if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' })
         return
       }
       
